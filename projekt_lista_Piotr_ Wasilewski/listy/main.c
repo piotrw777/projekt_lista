@@ -13,7 +13,6 @@ int count_elements(List * list);
 unsigned long long count_elements_v2(List * list);
 
 // funkcje do napisania
-void remove_nth_element(List * list, int index);
 void sort_list(List * list);
 void reverse_list(List * list);
 

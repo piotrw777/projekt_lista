@@ -148,3 +148,6 @@ void insert_to_list(List * list, int elem, int index) {
 
 
 } //end insert_to_list
+void remove_nth_element(List * list, int index) {
+	
+}
