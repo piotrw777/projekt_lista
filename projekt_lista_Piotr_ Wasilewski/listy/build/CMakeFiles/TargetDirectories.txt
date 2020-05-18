@@ -1,0 +1,3 @@
+/home/piotr/Algorytmy i struktury danych - K. Pietraszewski/projekt_lista_Piotr_ Wasilewski/listy/build/CMakeFiles/rebuild_cache.dir
+/home/piotr/Algorytmy i struktury danych - K. Pietraszewski/projekt_lista_Piotr_ Wasilewski/listy/build/CMakeFiles/list.dir
+/home/piotr/Algorytmy i struktury danych - K. Pietraszewski/projekt_lista_Piotr_ Wasilewski/listy/build/CMakeFiles/edit_cache.dir

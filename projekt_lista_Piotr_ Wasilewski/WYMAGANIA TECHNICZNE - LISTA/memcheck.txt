@@ -1,0 +1,37 @@
+int main (int argc, char **argv)
+{
+    int * x = malloc(sizeof(int));
+    (void)x;
+    return EXIT_SUCCESS;
+}
+
+
+gcc -g -pthread -Wpedantic -Wall -Werror -pedantic-errors -std=c11 -o bin_kompilation_success list.c main.c
+valgrind --leak-check=full ./bin_kompilation_success
+==17121== Memcheck, a memory error detector
+==17121== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==17121== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==17121== Command: ./bin_kompilation_success
+==17121== 
+99
+==17121== 
+==17121== HEAP SUMMARY:
+==17121==     in use at exit: 4 bytes in 1 blocks
+==17121==   total heap usage: 3 allocs, 2 frees, 1,032 bytes allocated
+==17121== 
+==17121== 4 bytes in 1 blocks are definitely lost in loss record 1 of 1
+==17121==    at 0x4C2FB0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==17121==    by 0x1087C0: main (main.c:10)
+==17121== 
+==17121== LEAK SUMMARY:
+==17121==    definitely lost: 4 bytes in 1 blocks
+==17121==    indirectly lost: 0 bytes in 0 blocks
+==17121==      possibly lost: 0 bytes in 0 blocks
+==17121==    still reachable: 0 bytes in 0 blocks
+==17121==         suppressed: 0 bytes in 0 blocks
+==17121== 
+==17121== For counts of detected and suppressed errors, rerun with: -v
+==17121== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+
+
+

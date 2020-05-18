@@ -1,0 +1,23 @@
+Wymagania techniczne:
+
+Build tool: Makefile
+Compiler: gcc/clang
+Compilation settings : -g -pthread -Wpedantic -Wall -std=c11
+    Opcjonalnie dodatkowo: -Werror -pedantic-errors
+
+Zero warningów z kompilacji.
+Czysty output z memchecka.
+
+Użycie dostarczonego pliku list.h
+W pliku list.c , implementacja listy.
+W pliku main.c , użycie listy.
+
+Przykład testowy
+W pliku main.c :
+- stworzy listę A, dorzuci do niej elementy 1 i 2,
+- stworzy listę B, dorzuci do niej elementy 3 i 4,
+- wypisze zawartość listy A,
+- wypisze zawartość listy B,
+- usunie listę A,
+- usunie listę B.
+

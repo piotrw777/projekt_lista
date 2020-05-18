@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/piotr/Algorytmy i struktury danych - K. Pietraszewski/projekt_lista_Piotr_ Wasilewski/listy/list.c
+stdio.h
+-
+stdlib.h
+-
+list.h
+/home/piotr/Algorytmy i struktury danych - K. Pietraszewski/projekt_lista_Piotr_ Wasilewski/listy/list.h
+
+/home/piotr/Algorytmy i struktury danych - K. Pietraszewski/projekt_lista_Piotr_ Wasilewski/listy/list.h
+
+/home/piotr/Algorytmy i struktury danych - K. Pietraszewski/projekt_lista_Piotr_ Wasilewski/listy/main.c
+stdio.h
+-
+stdlib.h
+-
+list.h
+/home/piotr/Algorytmy i struktury danych - K. Pietraszewski/projekt_lista_Piotr_ Wasilewski/listy/list.h
+
