@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "list.h"
-#define KOMENTARZ 1
+
 #define prezentuj
 //#define check_get_nth_element
-#define test_remove_nth_element
+//#define test_remove_nth_element
 //#define test_insert_to_list
+
 //valgrind --leak-check=full ./list
 
 //moje deklaracje
@@ -16,17 +17,13 @@ unsigned long long count_elements_v2(List * list);
 
 // funkcje do napisania
 void sort_list(List * list);
-void reverse_list(List * list);
 
 int main()
 {
-#ifdef KOMENTARZ
-	printf("To jest komentarz\n");
-#endif
 
     int k;
-	const int rozmiar_l1 = 3;
-	const int rozmiar_l2 = 4;
+	const int rozmiar_l1 = 1;
+	const int rozmiar_l2 = 15;
 
     List * lista_1 = create_list();
     List * lista_2 = create_list();
@@ -57,6 +54,13 @@ int main()
 	printf("\nLista 2 \n\n");
     print_list(lista_2);
 
+	printf("Odwracamy listę 1\n");
+	reverse_list(lista_1);
+	
+	printf("\nLista 1 po odwróceniu: \n\n");
+    print_list(lista_1);
+
+	
 #endif //prezentuj
 	
 #ifdef test_insert_to_list

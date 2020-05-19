@@ -32,8 +32,6 @@ void print_list(List * list) {
 		wsk_node = wsk_node->next;
 		k++;
 	}
-    
-
 }
 void present_list(List * list) {
     printf("Lista ma %lld elementów\n",list->length);
@@ -66,7 +64,7 @@ List * create_list(void) {
     return nowa_lista;
 }
 void append_to_list(List * list, int a) {
-    //je?li lista jest pusta
+    //jeśli lista jest pusta
     if( list -> head == NULL ) {
         list -> head = malloc( size_of_node );
         list -> tail = list -> head;
@@ -188,5 +186,24 @@ void remove_nth_element(List * list, int index) {
 
     list->length--;
 } //end of remove_nth_element
-
+void reverse_list(List * list) {
+	if(list->length <= 1) return;
+	
+	node * wsk_node1 = NULL;
+	node * wsk_node2 = list->head;
+	node * wsk_node3 = list->head->next;
+	
+	list->tail = list->head;
+	
+	while(wsk_node3 != NULL) {
+		//odwrócenie strzałki
+		wsk_node2->next = wsk_node1;
+		//idziemy dalej
+		wsk_node1 = wsk_node2;
+		wsk_node2 = wsk_node3;
+		wsk_node3 = wsk_node3 -> next;
+	}
+	list->head = wsk_node2;
+	wsk_node2->next = wsk_node1;
+}
 
