@@ -206,4 +206,28 @@ void reverse_list(List * list) {
 	list->head = wsk_node2;
 	wsk_node2->next = wsk_node1;
 }
-
+-void sort_list(List * list) {
+	//selection sort
+	node * wsk_i = list->head;
+	node * wsk_j;
+	node * wsk_min;
+	int min_element, tmp;
+ 	
+	while(wsk_i->next != NULL) {
+		wsk_min = wsk_i;
+		min_element = wsk_i->elem;
+		wsk_j = wsk_i->next;
+		
+		while(wsk_j != NULL) {
+			if(wsk_j->elem < min_element) {
+				wsk_min = wsk_j;
+				min_element = wsk_j->elem;
+			}
+			//zamieniamy elementy
+			tmp = wsk_i->elem;
+			wsk_i->elem = wsk_min->elem;
+			wsk_min->elem = tmp;
+		} //end while j
+		wsk_i = wsk_i->next;
+	} //end while i
+}
