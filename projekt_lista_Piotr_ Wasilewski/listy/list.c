@@ -83,8 +83,8 @@ int get_nth_element(List * list, int index) {
         wsk_node = wsk_node->next;
     };
     return wsk_node -> elem;
-    void insert_to_list();
 } // end of get_nth_element
+
 void insert_to_list(List * list, int elem, int index) {
 #ifdef check_access
 	if(index < 0 || index > list->length) {
