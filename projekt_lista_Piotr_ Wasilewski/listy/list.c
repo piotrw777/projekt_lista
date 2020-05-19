@@ -91,11 +91,12 @@ void insert_to_list(List * list, int elem, int index) {
 		perror("Proba dodania elementu listy na niewlasciwej pozycji\nBlad w funkcji insert_to_list");
 		exit(1);
 	}
+#endif
+	//dodanie nowego na końcu
 	if(index == list->length) {
 		append_to_list(list, elem);
 		return;
 	}
-#endif
     //dodajemy na początku
     if(index == 0) {
         node *wsk_node = list->head;
