@@ -206,7 +206,7 @@ void reverse_list(List * list) {
 	list->head = wsk_node2;
 	wsk_node2->next = wsk_node1;
 }
--void sort_list(List * list) {
+void sort_list(List * list) {
 	if(list->length <= 1) return;
 	//selection sort
 	node * wsk_i = list->head;

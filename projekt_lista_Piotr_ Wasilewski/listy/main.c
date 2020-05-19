@@ -15,14 +15,11 @@ void present_list(List * list);
 int count_elements(List * list);
 unsigned long long count_elements_v2(List * list);
 
-// funkcje do napisania
-void sort_list(List * list);
-
 int main()
 {
 
-    int k;
-	const int rozmiar_l1 = 1;
+    int k, liczba;
+	const int rozmiar_l1 = 7;
 	const int rozmiar_l2 = 15;
 
     List * lista_1 = create_list();
@@ -34,7 +31,9 @@ int main()
 #endif
 
     for(k = 0; k < rozmiar_l1; k++) {
-        append_to_list(lista_1, k);
+		printf("Podaj liczbę, którą chcesz dodać do listy: ");
+		scanf("%d",&liczba);
+        append_to_list(lista_1, liczba);
     }
 	for(k = 0; k < rozmiar_l2; k++) {
         append_to_list(lista_2, 2*k);
@@ -54,12 +53,16 @@ int main()
 	printf("\nLista 2 \n\n");
     print_list(lista_2);
 
-	printf("Odwracamy listę 1\n");
+	
+	printf("\nOdwracamy listę 1\n");
 	reverse_list(lista_1);
 	
 	printf("\nLista 1 po odwróceniu: \n\n");
     print_list(lista_1);
 
+	printf("\nLista 1 po sortowaniu: 1\n");
+	sort_list(lista_1);
+	print_list(lista_1);
 	
 #endif //prezentuj
 	
