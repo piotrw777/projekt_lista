@@ -2,116 +2,71 @@
 #include <stdlib.h>
 #include "list.h"
 
-#define prezentuj
-//#define check_get_nth_element
-//#define test_remove_nth_element
-//#define test_insert_to_list
-
 //valgrind --leak-check=full ./list
-
-//moje deklaracje
+//dodatkowe funkcje
 void print_list(List * list);
 void present_list(List * list);
-int count_elements(List * list);
-unsigned long long count_elements_v2(List * list);
 
-int main()
-{
+int main() {
 
-    int k, liczba;
-	const int rozmiar_l1 = 7;
-	const int rozmiar_l2 = 15;
+
+
+    int k,p = 1;
+	const int rozmiar_l1 = 12;
+	const int rozmiar_l2 = 8;
 
     List * lista_1 = create_list();
     List * lista_2 = create_list();
-
-#ifdef prezentuj
-    print_list(lista_1);
-    print_list(lista_2);
-#endif
-
+	List * lista_3 = create_list();
+	//dodajemy elementy do listy1
     for(k = 0; k < rozmiar_l1; k++) {
-		printf("Podaj liczbę, którą chcesz dodać do listy: ");
-		scanf("%d",&liczba);
-        append_to_list(lista_1, liczba);
+        append_to_list(lista_1, p % 13);
+		p *= 2;
     }
+    //dodajemy elementy do listy2
 	for(k = 0; k < rozmiar_l2; k++) {
         append_to_list(lista_2, 2*k);
     }
 
-#ifdef prezentuj
-
-    printf("Ilosc elementow pierwszej listy: %d\n", count_elements(lista_1));
-    printf("Ilosc elementow drugiej listy: %d\n", count_elements(lista_2));
-	printf("\nWersja 2 funkcji count\n\n");
-    printf("Ilosc elementow pierwszej listy: %lld\n", count_elements_v2(lista_1));
-    printf("Ilosc elementow drugiej listy: %lld\n", count_elements_v2(lista_2));
-
-	printf("\nLista 1 \n\n");
-    print_list(lista_1);
-
-	printf("\nLista 2 \n\n");
-    print_list(lista_2);
-
+	printf("\nElementy listy 1:\n\n");
 	
-	printf("\nOdwracamy listę 1\n");
-	reverse_list(lista_1);
+	for(k = 0; k < rozmiar_l1; k++) {
+		printf("Element nr %d: %d\n", k,get_nth_element(lista_1, k));
+    }
+    printf("\nElementy listy 2:\n\n");
 	
-	printf("\nLista 1 po odwróceniu: \n\n");
-    print_list(lista_1);
-
-	printf("\nLista 1 po sortowaniu: 1\n");
+    for(k = 0; k < rozmiar_l2; k++) {
+		printf("Element nr %d: %d\n", k,get_nth_element(lista_2, k));
+    }
+    
+    printf("\nOdwracamy listę 2\n\n");
+	reverse_list(lista_2);
+	
+	printf("Elementy listy 2 :\n\n");
+	for(k = 0; k < rozmiar_l2; k++) {
+		printf("Element nr %d: %d\n", k,get_nth_element(lista_2, k));
+    }
+    
+    printf("\nSortujemy listę 1\n");
 	sort_list(lista_1);
-	print_list(lista_1);
 	
-#endif //prezentuj
+	printf("\nLista 1 po sortowaniu: \n");
 	
-#ifdef test_insert_to_list
-	insert_to_list(lista_1,77,2);
-	insert_to_list(lista_2,88,5);
-	print_list(lista_1);
-	print_list(lista_2);
-	printf("Ilosc elementow pierwszej listy: %d\n", count_elements(lista_1));
-#endif //test_insert_to_list
-	
-#ifdef check_get_nth_element
-	for(k = 0; k < 9; k++)
-		printf("Element nr %d w liście 1 to:"
-			   "%d\n", k, get_nth_element(lista_1,k));
+	for(k = 0; k < rozmiar_l1; k++) {
+		printf("Element nr %d: %d\n", k,get_nth_element(lista_1, k));
+    }
 
-	printf("\n\n");
-
-	for(k = 0; k < 7; k++)
-		printf("Element nr %d w liście 2 to:"
-			   "%d\n", k, get_nth_element(lista_2,k));
-#endif // check_get_nth_element
-
-#ifdef test_remove_nth_element
-    int ind = 0;
-    do{
-        printf("Podaj indeks elementu do usunięcia: ");
-        scanf("%d",&ind);
-        if(ind >= 0) {
-            remove_nth_element(lista_1,ind);
-            printf("Lista1 po usunięciu: \n\n");
-            present_list(lista_1);
-        }
-    }while(ind != -1);
-
-
-#endif // test_remove_nth_element
 	clear_list(lista_1);
 	clear_list(lista_2);
 
-#ifdef prezentuj
-	printf("\nJestem po clear\n\n");
-	printf("Ilosc elementow pierwszej listy: %d\n", count_elements(lista_1));
-    printf("Ilosc elementow drugiej listy: %d\n", count_elements(lista_2));
-#endif
-
-
+	insert_to_list(lista_3,5,0);
+	insert_to_list(lista_3,7,0);
+	insert_to_list(lista_3,9,1);
+	printf("\n");
+	present_list(lista_3);
+	
 	destroy_list(&lista_1);
 	destroy_list(&lista_2);
-
+	destroy_list(&lista_3);
     return 0;
 }

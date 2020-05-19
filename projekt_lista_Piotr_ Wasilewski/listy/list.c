@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include "list.h"
 #define ull unsigned long long
-#define check_access  // sprawdzanie poprawności indeksu elementu listy
+#define check_access  // sprawdzanie poprawności indeksu elementu listy w funkcjach 
 typedef struct node node;
 struct node {
     node * next;
@@ -17,43 +17,6 @@ struct List {
     unsigned long long length; //ilość elementów
 };
 
-//moje:
-
-void print_list(List * list) {
-    if(list->head == NULL) {
-        printf("Lista jest pusta\n");
-        return;
-    }
-    int k = 0;
-    node * wsk_node = list -> head;
-	
-    while( wsk_node != NULL ) {
-		printf( "Element nr %d: %d\n", k, wsk_node->elem );
-		wsk_node = wsk_node->next;
-		k++;
-	}
-}
-void present_list(List * list) {
-    printf("Lista ma %lld elementów\n",list->length);
-    print_list(list);
-
-}
-int count_elements(List * list) {
-    if(list->head == NULL) {
-        return 0;
-    }
-    int k = 1;
-    node * wsk_node = list -> head;
-
-    while(wsk_node->next != NULL) {
-        k++;
-        wsk_node = wsk_node->next;
-    };
-    return k;
-}
-unsigned long long count_elements_v2(List * list) {
-    return list -> length;
-}
 
 //zadane:
 List * create_list(void) {
@@ -102,11 +65,14 @@ void destroy_list(List ** list) {
 int get_nth_element(List * list, int index) {
 #ifdef check_access
     if(list->head == NULL) {
-        perror("Proba dostepu do elementu w pustej liscie");
+        perror("Proba dostepu do elementu w pustej liscie\nBlad w funkcji get_nth_element");
+		exit(1);
     }
 
-    if( index >= (list -> length) )
-        perror("Proba dostepu do nieistniejacego elementu listy");
+    if( index >= (list -> length) ) {
+        perror("Proba dostepu do nieistniejacego elementu listy\nBlad w funkcji get_nth_element");
+		exit(1);
+	}
 
 #endif // check_access
     int k = 0;
@@ -121,9 +87,13 @@ int get_nth_element(List * list, int index) {
 } // end of get_nth_element
 void insert_to_list(List * list, int elem, int index) {
 #ifdef check_access
-	if(index < 0 || index >= list->length) {
+	if(index < 0 || index > list->length) {
 		perror("Proba dodania elementu listy na niewlasciwej pozycji\nBlad w funkcji insert_to_list");
 		exit(1);
+	}
+	if(index == list->length) {
+		append_to_list(list, elem);
+		return;
 	}
 #endif
     //dodajemy na początku
@@ -150,8 +120,8 @@ void insert_to_list(List * list, int elem, int index) {
 		return;
 	}
 
-
 } //end insert_to_list
+
 void remove_nth_element(List * list, int index) {
     //usuwanie elementu o indeksie 0
     if(index == 0) {
@@ -169,6 +139,12 @@ void remove_nth_element(List * list, int index) {
         list->length--;
         return;
     }
+#ifdef check_access
+	if(index < 0 || index >= list->length) {
+		perror("Proba usuniecia elementu o nieistniejacym indeksie.\bBlad w funkcji remove_nth_element");
+		exit(1);
+	}
+#endif
     //elementy o indeksie >= 1
     int k = index - 1;
     node * wsk_node = list->head;
@@ -232,4 +208,26 @@ void sort_list(List * list) {
 		wsk_min->elem = tmp;
 		wsk_i = wsk_i->next;
 	} 
+}
+
+//moje:
+
+void print_list(List * list) {
+    if(list->head == NULL) {
+        printf("Lista jest pusta\n");
+        return;
+    }
+    int k = 0;
+    node * wsk_node = list -> head;
+	
+    while( wsk_node != NULL ) {
+		printf( "Element nr %d: %d\n", k, wsk_node->elem );
+		wsk_node = wsk_node->next;
+		k++;
+	}
+}
+void present_list(List * list) {
+    printf("Lista ma %lld elementów\n",list->length);
+    print_list(list);
+
 }
