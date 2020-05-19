@@ -13,8 +13,8 @@ int size_of_node = sizeof(node);
 
 struct List {
     node * head;  //wskaźnik na początek listy
-    node * tail;  //wska?nik na koniec listy
-    unsigned long long list_size; //ilo?? elementów
+    node * tail;  //wskaźnik na koniec listy
+    unsigned long long length; //ilość elementów
 };
 
 //moje:
@@ -26,12 +26,18 @@ void print_list(List * list) {
     }
     int k = 0;
     node * wsk_node = list -> head;
+	
+    while( wsk_node != NULL ) {
+		printf( "Element nr %d: %d\n", k, wsk_node->elem );
+		wsk_node = wsk_node->next;
+		k++;
+	}
+    
 
-    do {
-        printf( "Element nr %d: %d\n", k++, wsk_node->elem );
-        wsk_node = wsk_node->next;
-    } while( wsk_node->next != NULL );
-    printf( "Element nr %d: %d\n\n", k, wsk_node->elem );
+}
+void present_list(List * list) {
+    printf("Lista ma %lld elementów\n",list->length);
+    print_list(list);
 
 }
 int count_elements(List * list) {
@@ -48,7 +54,7 @@ int count_elements(List * list) {
     return k;
 }
 unsigned long long count_elements_v2(List * list) {
-    return list -> list_size;
+    return list -> length;
 }
 
 //zadane:
@@ -56,7 +62,7 @@ List * create_list(void) {
     List * nowa_lista = malloc( sizeof( List ) );
     nowa_lista -> head = NULL;
     nowa_lista -> tail = NULL;
-    nowa_lista -> list_size = 0;
+    nowa_lista -> length = 0;
     return nowa_lista;
 }
 void append_to_list(List * list, int a) {
@@ -66,28 +72,28 @@ void append_to_list(List * list, int a) {
         list -> tail = list -> head;
         list -> head -> next = NULL;
         list -> head -> elem = a;
-        list -> list_size = 1;
+        list -> length = 1;
     } else {
         node * wsk_node = list -> tail;
         wsk_node -> next = malloc( size_of_node );
         wsk_node -> next -> next = NULL;
         wsk_node -> next -> elem = a;
         list -> tail = wsk_node -> next;
-        (list -> list_size)++;
+        (list -> length)++;
     }
 }
 void clear_list(List * list) {
     node * wsk_node_1 = list -> head;
     node * wsk_node_2;
 
-    while( wsk_node_1 != NULL) {
+    while(wsk_node_1 != NULL) {
         wsk_node_2 = wsk_node_1 -> next;
         free(wsk_node_1);
         wsk_node_1 = wsk_node_2;
     }
     list -> head = NULL;
     list -> tail = NULL;
-    list -> list_size = 0;
+    list -> length = 0;
 }
 void destroy_list(List ** list) {
     clear_list(*list);
@@ -101,14 +107,14 @@ int get_nth_element(List * list, int index) {
         perror("Proba dostepu do elementu w pustej liscie");
     }
 
-    if( index >= (list -> list_size) )
+    if( index >= (list -> length) )
         perror("Proba dostepu do nieistniejacego elementu listy");
 
 #endif // check_access
     int k = 0;
     node * wsk_node = list -> head;
 
-    while( k < index ) {
+    while(k < index) {
         k++;
         wsk_node = wsk_node->next;
     };
@@ -117,7 +123,7 @@ int get_nth_element(List * list, int index) {
 } // end of get_nth_element
 void insert_to_list(List * list, int elem, int index) {
 #ifdef check_access
-	if(index < 0 || index >= list->list_size) {
+	if(index < 0 || index >= list->length) {
 		perror("Proba dodania elementu listy na niewlasciwej pozycji\nBlad w funkcji insert_to_list");
 		exit(1);
 	}
@@ -128,10 +134,10 @@ void insert_to_list(List * list, int elem, int index) {
         list->head = malloc(size_of_node);
         list->head ->next = wsk_node;
         list->head->elem=elem;
-        list->list_size++;
+        list->length++;
         return;
     }
-    if(index < list->list_size) {
+    if(index < list->length) {
 		node * wsk_node = list->head;
 		node * wsk_node_2;
 		int k = index - 1;
@@ -142,12 +148,45 @@ void insert_to_list(List * list, int elem, int index) {
 		wsk_node->next = malloc(size_of_node);
 		wsk_node->next->next=wsk_node_2;
 		wsk_node->next->elem=elem;
-		list->list_size++;
+		list->length++;
 		return;
 	}
 
 
 } //end insert_to_list
 void remove_nth_element(List * list, int index) {
-	
-}
+    //usuwanie elementu o indeksie 0
+    if(index == 0) {
+        //jeśli jest tylko jeden element
+        if(list->length == 1) {
+            free( list->head);
+            list->head = NULL;
+            list->tail = NULL;
+        }
+        else {
+            node * wsk_node = list->head->next;
+            free(list->head);
+            list->head = wsk_node;
+        }
+        list->length--;
+        return;
+    }
+    //elementy o indeksie >= 1
+    int k = index - 1;
+    node * wsk_node = list->head;
+    node * wsk_node2;
+    //idziemy do miejsca usuwania
+    while(k--) {
+        wsk_node = wsk_node->next;
+    }
+    wsk_node2 = wsk_node->next->next;
+    free(wsk_node->next);
+    wsk_node->next = wsk_node2;
+    //jeśli usuwamy ostatni zmieniamy tail
+    if(index == list->length - 1)
+        list->tail = wsk_node;
+
+    list->length--;
+} //end of remove_nth_element
+
+

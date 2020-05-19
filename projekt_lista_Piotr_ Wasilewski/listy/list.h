@@ -6,8 +6,6 @@ typedef struct List List;
 // create and returns instance of List
 List * create_list(void);
 
-
-
 // releases all memory used by list, list is set to NULL
 void destroy_list(List ** list);
 
