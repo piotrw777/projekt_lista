@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include "list.h"
 #define ull unsigned long long
-#define check_access  // sprawdzanie poprawności indeksu elementu listy w funkcjach 
+#define check_access  // sprawdzanie poprawności indeksu elementu listy w funkcjach
 typedef struct node node;
 struct node {
     node * next;
@@ -16,7 +16,6 @@ struct List {
     node * tail;  //wskaźnik na koniec listy
     unsigned long long length; //ilość elementów
 };
-
 
 //zadane:
 List * create_list(void) {
@@ -61,6 +60,7 @@ void destroy_list(List ** list) {
     free((*list) -> head);
     free((*list) -> tail);
     free(*list);
+    *list = NULL;
 }
 int get_nth_element(List * list, int index) {
 #ifdef check_access
@@ -165,13 +165,13 @@ void remove_nth_element(List * list, int index) {
 } //end of remove_nth_element
 void reverse_list(List * list) {
 	if(list->length <= 1) return;
-	
+
 	node * wsk_node1 = NULL;
 	node * wsk_node2 = list->head;
 	node * wsk_node3 = list->head->next;
-	
+
 	list->tail = list->head;
-	
+
 	while(wsk_node3 != NULL) {
 		//odwrócenie strzałki
 		wsk_node2->next = wsk_node1;
@@ -190,27 +190,70 @@ void sort_list(List * list) {
 	node * wsk_j;
 	node * wsk_min;
 	int min_element, tmp;
- 	
+
 	while(wsk_i->next != NULL) {
 		wsk_min = wsk_i;
 		min_element = wsk_i->elem;
 		wsk_j = wsk_i->next;
-		
+
 		while(wsk_j != NULL) {
 			if(wsk_j->elem < min_element) {
 				wsk_min = wsk_j;
 				min_element = wsk_j->elem;
 			}
 			wsk_j = wsk_j->next;
-		} 
+		}
 		//zamieniamy elementy
 		tmp = wsk_i->elem;
 		wsk_i->elem = wsk_min->elem;
 		wsk_min->elem = tmp;
 		wsk_i = wsk_i->next;
-	} 
+	}
 }
 
+void sort_list_2(List * list) {
+	if(list->length <= 1) return;
+	//insertion sort
+    node *wsk_i1 = list->head;
+    node *wsk_i2 = list->head->next;
+    node *wsk_j1, *wsk_j2;
+    short int k;
+
+    //wsk_i2 przebiega po kolei elementu listy
+    //wsk_i1 pokazuje na element poprzedzający *wsk_i2
+    //(potrzebne do zamiany wskaźników next potem)
+    while(wsk_i2 != NULL) {
+        k = 0;
+        wsk_j1 = wsk_j2 = list->head;
+        //szukamy gdzie umieścić element *wsk_i2
+        while(wsk_j2->elem < wsk_i2->elem) {
+            wsk_j2 = wsk_j2->next;
+            if(k != 0) wsk_j1 = wsk_j1->next;
+            k = 1;
+        }
+        //jeśli *wsk_i2 powinien być na początku
+        if(wsk_j2 == list->head) {
+            //zmiana head'a
+            if(wsk_i2 == list->tail) list->tail = wsk_i1;
+            list->head = wsk_i2;
+            wsk_i2 = wsk_i2->next;
+            wsk_i1->next = wsk_i2;
+            list->head->next = wsk_j1;
+        }
+        //element *wsk_j2 jest na swoim miejscu
+        else if(wsk_j2 == wsk_i2) {
+            wsk_i1 = wsk_i1->next;
+            wsk_i2 = wsk_i2->next;
+        }
+        else {
+            if(list->tail == wsk_i2) list->tail = wsk_i1;
+            wsk_j1->next = wsk_i2;
+            wsk_i2 = wsk_i2->next;
+            wsk_i1->next = wsk_i2;
+            wsk_j1->next->next = wsk_j2;
+        }
+    }
+}
 //moje:
 
 void print_list(List * list) {
@@ -220,7 +263,7 @@ void print_list(List * list) {
     }
     int k = 0;
     node * wsk_node = list -> head;
-	
+
     while( wsk_node != NULL ) {
 		printf( "Element nr %d: %d\n", k, wsk_node->elem );
 		wsk_node = wsk_node->next;
